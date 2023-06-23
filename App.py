@@ -1,6 +1,7 @@
 import requests
 import streamlit as st
 from app_store_scraper import AppStore
+import pandas as pd
 
 # Function to search for apps by name and return a list of app names and IDs
 def search_apps(app_name, country_code="hk", limit=10):
@@ -34,16 +35,8 @@ def main():
             try:
                 app = AppStore(country=country_code, app_name="inmotion-by-cncbi", app_id=selected_app_id)
                 reviews = app.review(how_many=10)
-
-                for review in reviews:
-                    title = review["version"]
-                    #user_name = review["userName"].encode('utf-8')
-                    #review_text = review["review"].encode('utf-8')
-                    st.write(f"**{title}**")
-                    #st.write(f"_by {user_name} ({review['date']})_")
-                    #st.write(f"Rating: {review['rating']}")
-                    #st.write(review_text)
-                    st.write("---")
+                reviews_df = pd.DataFrame(reviews)
+                st.dataframe(reviews_df)
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
         else:
