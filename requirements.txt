@@ -4,4 +4,4 @@ app-store-scraper
 pandas
 TextBlob
 SnowNLP
-openpyxl
+base64
