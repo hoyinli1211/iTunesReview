@@ -1,3 +1,4 @@
 streamlit
 requests
 app-store-scraper
+app_store_reviews
