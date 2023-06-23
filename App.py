@@ -57,7 +57,7 @@ def main():
                 reviews_df['sentiment'] = reviews_df['review'].apply(lambda text: analyze_sentiment(text, nlp_library))
 
                 # Reorder the DataFrame columns
-                column_order = ['review', 'sentiment', 'date', 'title', 'userName', 'rating', 'isEdited', 'developerResponse', 'id']
+                column_order = ['review', 'sentiment', 'date', 'title', 'userName', 'rating', 'isEdited', 'developerResponse']
                 reviews_df = reviews_df[column_order]
 
                 st.dataframe(reviews_df)
