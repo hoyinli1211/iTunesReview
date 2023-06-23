@@ -36,8 +36,9 @@ def main():
                 app = AppStore(country=country_code, app_name="inmotion-by-cncbi", app_id=selected_app_id)
                 reviews = app.review(how_many=20)
                 reviews_cnt = app.reviews_count
+                reviews2 = app.reviews
                 st.write("Raw reviews data:", reviews_cnt)
-                reviews_df = pd.DataFrame(reviews)
+                reviews_df = pd.DataFrame(reviews2)
                 st.dataframe(reviews_df)
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
