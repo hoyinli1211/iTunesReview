@@ -37,12 +37,12 @@ def main():
 
                 for review in reviews:
                     title = review["version"]
-                    user_name = review["userName"].encode('utf-8')
-                    review_text = review["review"].encode('utf-8')
-                    #st.write(f"**{title}**")
-                    st.write(f"_by {user_name} ({review['date']})_")
-                    st.write(f"Rating: {review['rating']}")
-                    st.write(review_text)
+                    #user_name = review["userName"].encode('utf-8')
+                    #review_text = review["review"].encode('utf-8')
+                    st.write(f"**{title}**")
+                    #st.write(f"_by {user_name} ({review['date']})_")
+                    #st.write(f"Rating: {review['rating']}")
+                    #st.write(review_text)
                     st.write("---")
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
