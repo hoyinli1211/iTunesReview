@@ -39,7 +39,7 @@ def main():
                 reviews2 = app.reviews
                 st.write("Raw reviews data:", reviews_cnt)
                 reviews_df = pd.DataFrame(reviews2)
-                st.dataframe(reviews_df)
+                st.dataframe(reviews_df, width=1000)
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
         else:
