@@ -36,9 +36,9 @@ def main():
                 reviews = app.review(how_many=10)
 
                 for review in reviews:                   
-                    st.write(f"**{title.encode('latin-1', 'replace').decode('latin-1')}**")
-                    st.write(f"_by {user_name} ({review['date'].encode('latin-1', 'replace').decode('latin-1')})_")
-                    st.write(f"Rating: {review['rating'].encode('latin-1', 'replace').decode('latin-1')}")
+                    st.write(f"**{title}**")
+                    st.write(f"_by {user_name} ({review['date']})_")
+                    st.write(f"Rating: {review['rating']}")
                     st.write(review_text)
                     st.write("---")
             except Exception as e:
