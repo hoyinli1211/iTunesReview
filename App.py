@@ -1,6 +1,6 @@
 import requests
 import streamlit as st
-from app_store_reviews import AppStore
+from app_store_scraper import AppStore
 
 # Function to search for apps by name and return a list of app names and IDs
 def search_apps(app_name="inmotion-by-cncbi", country_code="hk", limit=10):
@@ -32,14 +32,14 @@ def main():
             selected_app_id = next(app["id"] for app in apps if app["name"] == selected_app_name)
 
             try:
-                app_store = AppStore(country_code)
-                reviews = app_store.get_reviews(app_id=selected_app_id, count=10)
+                app = AppStore(country=country_code, app_name=selected_app_name, app_id=selected_app_id)
+                reviews = app.review(how_many=10)
 
                 for review in reviews:
                     st.write(f"**{review['title']}**")
-                    st.write(f"_by {review['author']} ({review['date']})_")
+                    st.write(f"_by {review['userName']} ({review['date']})_")
                     st.write(f"Rating: {review['rating']}")
-                    st.write(review["text"])
+                    st.write(review["review"])
                     st.write("---")
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
