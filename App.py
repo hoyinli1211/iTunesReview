@@ -34,7 +34,7 @@ def main():
 
             try:
                 app = AppStore(country=country_code, app_name="inmotion-by-cncbi", app_id=selected_app_id)
-                reviews = app.review(how_many=10)
+                reviews = app.reviews
                 st.write("Raw reviews data:", type(reviews))
                 reviews_df = pd.DataFrame(reviews)
                 st.dataframe(reviews_df)
