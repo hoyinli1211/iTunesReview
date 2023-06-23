@@ -4,5 +4,4 @@ app-store-scraper
 pandas
 TextBlob
 SnowNLP
-base64
 BytesIO
