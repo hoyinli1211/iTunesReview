@@ -3,7 +3,7 @@ import streamlit as st
 from app_store_scraper import AppStore
 
 # Function to search for apps by name and return a list of app names and IDs
-def search_apps(app_name="inmotion-by-cncbi", country_code="hk", limit=10):
+def search_apps(app_name, country_code="hk", limit=10):
     url = "https://itunes.apple.com/search"
     params = {
         "term": app_name,
@@ -21,7 +21,7 @@ def search_apps(app_name="inmotion-by-cncbi", country_code="hk", limit=10):
 def main():
     st.title("Apple Store Customer Reviews")
 
-    app_name = st.text_input("Enter the name of the app:")
+    app_name = st.text_input("Enter the name of the app:", "inmotion-by-cncbi")
     country_code = st.text_input("Enter the country code (e.g., 'us'):", "hk")
 
     if app_name and country_code:
