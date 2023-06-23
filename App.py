@@ -34,9 +34,9 @@ def main():
 
             try:
                 app = AppStore(country=country_code, app_name="inmotion-by-cncbi", app_id=selected_app_id)
-                app.review(how_many=33)
-                app.reviews
-                st.write("Raw reviews data:", reviews)
+                reviews = app.review(how_many=20)
+                reviews_cnt = app.reviews_count
+                st.write("Raw reviews data:", reviews_cnt)
                 reviews_df = pd.DataFrame(reviews)
                 st.dataframe(reviews_df)
             except Exception as e:
