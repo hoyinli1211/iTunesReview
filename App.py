@@ -47,7 +47,7 @@ def main():
 
                 # Perform sentiment analysis and add a new 'sentiment' column to the DataFrame
                 reviews_df['sentiment'] = reviews_df['review'].apply(analyze_sentiment)
-                column_order = ['review', 'sentiment', 'date', 'title', 'userName', 'rating', 'isEdited', 'developerResponse', 'id']
+                column_order = ['review', 'sentiment', 'date', 'title', 'userName', 'rating', 'isEdited', 'developerResponse']
                 reviews_df = reviews_df[column_order]
                 st.dataframe(reviews_df)
             except Exception as e:
