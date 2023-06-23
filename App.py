@@ -1,5 +1,6 @@
 import requests
 import streamlit as st
+from app_store_scraper import AppStore
 
 # Function to search for apps by name and return a list of app names and IDs
 def search_apps(app_name, country_code="hk", limit=10):
@@ -17,19 +18,11 @@ def search_apps(app_name, country_code="hk", limit=10):
     apps = [{"name": app["trackName"], "id": app["trackId"]} for app in results]
     return apps
 
-# Function to fetch reviews using the RSS iTunes Reviews API
-def fetch_reviews(app_id="1294956074", country_code="hk", page=1):
-    url = f"https://rss.itunes.apple.com/api/v1/{country_code}/apps/{app_id}/reviews"
-    params = {"page": page}
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    return response.json()
-
 def main():
     st.title("Apple Store Customer Reviews")
 
     app_name = st.text_input("Enter the name of the app:")
-    country_code = st.text_input("Enter the country code (e.g., 'us'):", "hk")  # Change default to "hk" for Hong Kong
+    country_code = st.text_input("Enter the country code (e.g., 'us'):", "hk")
 
     if app_name and country_code:
         apps = search_apps(app_name, country_code)
@@ -39,13 +32,14 @@ def main():
             selected_app_id = next(app["id"] for app in apps if app["name"] == selected_app_name)
 
             try:
-                reviews = fetch_reviews(selected_app_id, country_code)
+                app = AppStore(country=country_code, app_name=selected_app_name, app_id=selected_app_id)
+                reviews = app.review(how_many=10)
 
-                for review in reviews["results"]:
+                for review in reviews:
                     st.write(f"**{review['title']}**")
-                    st.write(f"_by {review['author']} ({review['date']})_")
+                    st.write(f"_by {review['userName']} ({review['date']})_")
                     st.write(f"Rating: {review['rating']}")
-                    st.write(review["content"])
+                    st.write(review["review"])
                     st.write("---")
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
