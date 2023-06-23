@@ -34,7 +34,7 @@ def main():
 
             try:
                 app = AppStore(country=country_code, app_name="inmotion-by-cncbi", app_id=selected_app_id)
-                reviews = app.review(how_many=20)
+                reviews = app.review(how_many=1000)
                 reviews_cnt = app.reviews_count
                 reviews2 = app.reviews
                 st.write("Raw reviews data:", reviews_cnt)
