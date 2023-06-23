@@ -2,6 +2,7 @@ import requests
 import streamlit as st
 from app_store_scraper import AppStore
 import pandas as pd
+from textblob import TextBlob
 
 # Function to search for apps by name and return a list of app names and IDs
 def search_apps(app_name, country_code="hk", limit=10):
@@ -18,6 +19,10 @@ def search_apps(app_name, country_code="hk", limit=10):
 
     apps = [{"name": app["trackName"], "id": app["trackId"]} for app in results]
     return apps
+
+def analyze_sentiment(text):
+    analysis = TextBlob(text)
+    return analysis.sentiment.polarity
 
 def main():
     st.title("Apple Store Customer Feedback Reviews")
@@ -39,6 +44,10 @@ def main():
                 reviews2 = app.reviews
                 st.write("Raw reviews data:", reviews_cnt)
                 reviews_df = pd.DataFrame(reviews2)
+
+                # Perform sentiment analysis and add a new 'sentiment' column to the DataFrame
+                reviews_df['sentiment'] = reviews_df['review'].apply(analyze_sentiment)
+
                 st.dataframe(reviews_df)
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
