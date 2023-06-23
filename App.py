@@ -20,7 +20,7 @@ def search_apps(app_name, country_code="hk", limit=10):
     return apps
 
 def main():
-    st.title("Apple Store Customer Reviews")
+    st.title("Apple Store Customer Feedback Reviews")
 
     app_name = st.text_input("Enter the name of the app:", "inmotion-by-cncbi")
     country_code = st.text_input("Enter the country code (e.g., 'us'):", "hk")
@@ -39,7 +39,7 @@ def main():
                 reviews2 = app.reviews
                 st.write("Raw reviews data:", reviews_cnt)
                 reviews_df = pd.DataFrame(reviews2)
-                st.dataframe(reviews_df, width=2000)
+                st.dataframe(reviews_df)
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
         else:
