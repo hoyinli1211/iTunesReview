@@ -31,6 +31,11 @@ def analyze_sentiment(text, library):
     else:
         return None
 
+def export_dataframe(df):
+    file_name = "app_reviews_sentiment_analysis.xlsx"
+    df.to_excel(file_name, engine='openpyxl', index=False)
+    return file_name
+
 def main():
     st.title("Apple Store Customer Feedback Reviews")
 
@@ -61,6 +66,16 @@ def main():
                 reviews_df = reviews_df[column_order]
 
                 st.dataframe(reviews_df)
+
+                # Add a button to export the DataFrame as an xlsx file
+                if st.button("Export DataFrame as xlsx"):
+                    file_name = export_dataframe(reviews_df)
+                    st.success(f"DataFrame exported as {file_name}. Please check your local directory.")
+                    st.markdown(
+                        f"<a href='{file_name}' target='_blank' download>Click here to download {file_name}</a>",
+                        unsafe_allow_html=True,
+                    )
+
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
         else:
