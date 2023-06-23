@@ -36,7 +36,7 @@ def main():
                 reviews = app.review(how_many=10)
 
                 for review in reviews:                   
-                    st.write(f"**{title}**")
+                    st.write(f"**{title.encode('utf-8')}**")
                     st.write(f"_by {user_name} ({review['date']})_")
                     st.write(f"Rating: {review['rating']}")
                     st.write(review_text)
