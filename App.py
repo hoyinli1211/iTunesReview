@@ -35,3 +35,19 @@ def main():
     if app_name and country_code:
         app_id = search_app(app_name, country_code)
         if app_id:
+            try:
+                            reviews = fetch_reviews(app_id, country_code)
+            
+                            for review in reviews["results"]:
+                                st.write(f"**{review['title']}**")
+                                st.write(f"_by {review['author']} ({review['date']})_")
+                                st.write(f"Rating: {review['rating']}")
+                                st.write(review["content"])
+                                st.write("---")
+                        except Exception as e:
+                            st.error(f"Error fetching reviews: {e}")
+                    else:
+                        st.error("App not found. Please try with a different app name or country code.")
+
+if __name__ == "__main__":
+    main()
