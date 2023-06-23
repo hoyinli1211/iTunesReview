@@ -4,8 +4,6 @@ from app_store_scraper import AppStore
 import pandas as pd
 from textblob import TextBlob
 from snownlp import SnowNLP
-import base64
-from io import BytesIO
 
 # Function to search for apps by name and return a list of app names and IDs
 def search_apps(app_name, country_code="hk", limit=10):
@@ -32,18 +30,6 @@ def analyze_sentiment(text, library):
         return analysis.sentiments
     else:
         return None
-
-def export_dataframe(df):
-    file_name = "app_reviews_sentiment_analysis.xlsx"
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='openpyxl')
-    df.to_excel(writer, index=False)
-    writer.save()
-    output.seek(0)
-
-    binary_data = output.read()
-    b64_data = base64.b64encode(binary_data).decode()
-    return file_name, b64_data
 
 def main():
     st.title("Apple Store Customer Feedback Reviews")
@@ -75,14 +61,6 @@ def main():
                 reviews_df = reviews_df[column_order]
 
                 st.dataframe(reviews_df)
-
-                # Add a button to export the DataFrame as an xlsx file and provide a direct download link
-                if st.button("Export DataFrame as xlsx"):
-                    file_name, b64_data = export_dataframe(reviews_df)
-                    st.success(f"DataFrame exported as {file_name}.")
-                    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64_data}" download="{file_name}">Click here to download {file_name}</a>'
-                    st.markdown(href, unsafe_allow_html=True)
-
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
         else:
