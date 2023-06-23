@@ -36,10 +36,14 @@ def main():
                 reviews = app.review(how_many=10)
 
                 for review in reviews:
-                    st.write(f"**{review['title']}**")
-                    st.write(f"_by {review['userName']} ({review['date']})_")
+                    title = review['title'].encode('utf-8', 'ignore').decode('utf-8')
+                    user_name = review['userName'].encode('utf-8', 'ignore').decode('utf-8')
+                    review_text = review["review"].encode('utf-8', 'ignore').decode('utf-8')
+                    
+                    st.write(f"**{title}**")
+                    st.write(f"_by {user_name} ({review['date']})_")
                     st.write(f"Rating: {review['rating']}")
-                    st.write(review["review"])
+                    st.write(review_text)
                     st.write("---")
             except Exception as e:
                 st.error(f"Error fetching reviews: {e}")
