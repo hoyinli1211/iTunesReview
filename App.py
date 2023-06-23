@@ -35,11 +35,7 @@ def main():
                 app = AppStore(country=country_code, app_name=selected_app_name, app_id=selected_app_id)
                 reviews = app.review(how_many=10)
 
-                for review in reviews:
-                    title = review['title'].encode('latin-1', 'ignore').decode('latin-1')
-                    user_name = review['userName'].encode('latin-1', 'ignore').decode('latin-1')
-                    review_text = review["review"].encode('latin-1', 'ignore').decode('latin-1')
-                    
+                for review in reviews:                   
                     st.write(f"**{title}**")
                     st.write(f"_by {user_name} ({review['date']})_")
                     st.write(f"Rating: {review['rating']}")
