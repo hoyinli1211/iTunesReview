@@ -32,7 +32,7 @@ def main():
             selected_app_id = next(app["id"] for app in apps if app["name"] == selected_app_name)
 
             try:
-                app = AppStore(country=country_code, app_name=selected_app_name.encode("utf-8").decode('utf-8'), app_id=selected_app_id)
+                app = AppStore(country=country_code, app_name=selected_app_name.encode("utf-8"), app_id=selected_app_id)
                 reviews = app.review(how_many=10)
 
                 for review in reviews:
