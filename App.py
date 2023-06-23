@@ -27,12 +27,12 @@ def main():
     if app_name and country_code:
         apps = search_apps(app_name, country_code)
         if apps:
-            app_names = [app["name"].encode('utf-8') for app in apps]
+            app_names = [app["name"] for app in apps]
             selected_app_name = st.selectbox("Select an app:", app_names)
             selected_app_id = next(app["id"] for app in apps if app["name"] == selected_app_name)
 
             try:
-                app = AppStore(country=country_code, app_name=selected_app_name, app_id=selected_app_id)
+                app = AppStore(country=country_code, app_id=selected_app_id)
                 reviews = app.review(how_many=10)
 
                 for review in reviews:
