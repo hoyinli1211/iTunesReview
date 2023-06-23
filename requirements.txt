@@ -3,3 +3,4 @@ requests
 app-store-scraper
 pandas
 TextBlob
+SnowNLP
