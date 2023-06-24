@@ -23,12 +23,18 @@ def search_apps(app_name, country_code="hk", limit=10):
     return apps
 
 # Add this function to perform sentiment analysis using Transformers
+from transformers import TFDistilBertForSequenceClassification, DistilBertTokenizer
+
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+model = TFDistilBertForSequenceClassification.from_pretrained(model_name)
+tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+
+# Function to analyze sentiment using the Transformers library
 def analyze_sentiment_transformers(text):
-    model_name = "distilbert-base-uncased-finetuned-sst-2-english"
-    model_revision = "af0f99b"
-    sentiment_pipeline = pipeline("sentiment-analysis", model=model_name, revision=model_revision)
-    result = sentiment_pipeline(text)[0]
-    return result["score"]
+    inputs = tokenizer(text, return_tensors="tf")
+    outputs = model(inputs)
+    scores = outputs.logits.numpy().flatten()
+    return scores
 
 def analyze_sentiment(text, library):
     if library == "TextBlob":
