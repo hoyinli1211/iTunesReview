@@ -4,22 +4,13 @@ from app_store_scraper import AppStore
 import pandas as pd
 from textblob import TextBlob
 from snownlp import SnowNLP
+from transformers import pipeline
 
-# Function to search for apps by name and return a list of app names and IDs
-def search_apps(app_name, country_code="hk", limit=10):
-    url = "https://itunes.apple.com/search"
-    params = {
-        "term": app_name,
-        "country": country_code,
-        "entity": "software",
-        "limit": limit
-    }
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    results = response.json()["results"]
-
-    apps = [{"name": app["trackName"], "id": app["trackId"]} for app in results]
-    return apps
+# Add this function to perform sentiment analysis using Transformers
+def analyze_sentiment_transformers(text):
+    sentiment_pipeline = pipeline("sentiment-analysis")
+    result = sentiment_pipeline(text)[0]
+    return result["score"]
 
 def analyze_sentiment(text, library):
     if library == "TextBlob":
@@ -28,6 +19,8 @@ def analyze_sentiment(text, library):
     elif library == "SnowNLP":
         analysis = SnowNLP(text)
         return analysis.sentiments
+    elif library == "Transformers":
+        return analyze_sentiment_transformers(text)
     else:
         return None
 
@@ -36,7 +29,7 @@ def main():
 
     app_name = st.text_input("Enter the name of the app:", "inmotion-by-cncbi")
     country_code = st.text_input("Enter the country code (e.g., 'us'):", "hk")
-    nlp_library = st.selectbox("Select NLP library for sentiment analysis:", ["TextBlob", "SnowNLP"])
+    nlp_library = st.selectbox("Select NLP library for sentiment analysis:", ["TextBlob", "SnowNLP", "Transformers"])
 
     if app_name and country_code:
         apps = search_apps(app_name, country_code)
