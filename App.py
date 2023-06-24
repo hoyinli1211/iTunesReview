@@ -6,6 +6,22 @@ from textblob import TextBlob
 from snownlp import SnowNLP
 from transformers import pipeline
 
+# Function to search for apps by name and return a list of app names and IDs
+def search_apps(app_name, country_code="hk", limit=10):
+    url = "https://itunes.apple.com/search"
+    params = {
+        "term": app_name,
+        "country": country_code,
+        "entity": "software",
+        "limit": limit
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    results = response.json()["results"]
+
+    apps = [{"name": app["trackName"], "id": app["trackId"]} for app in results]
+    return apps
+
 # Add this function to perform sentiment analysis using Transformers
 def analyze_sentiment_transformers(text):
     sentiment_pipeline = pipeline("sentiment-analysis")
