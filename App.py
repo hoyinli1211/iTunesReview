@@ -24,7 +24,9 @@ def search_apps(app_name, country_code="hk", limit=10):
 
 # Add this function to perform sentiment analysis using Transformers
 def analyze_sentiment_transformers(text):
-    sentiment_pipeline = pipeline("sentiment-analysis")
+    model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+    model_revision = "af0f99b"
+    sentiment_pipeline = pipeline("sentiment-analysis", model=model_name, revision=model_revision)
     result = sentiment_pipeline(text)[0]
     return result["score"]
 
